@@ -1,0 +1,569 @@
+@namespace url(http://www.w3.org/1999/xhtml);
+@charset 'UTF-8';
+
+:root {
+  --H: 248; --S: 39%; --L: 39.2%;
+
+  --lighterdarker: 10%;
+  --degree: 30;
+  --comp-color: hsl(calc(var(--H) + 180), var(--S), var(--L));
+  --base-color: hsl(var(--H),var(--S), var(--L));
+  --desat-color: hsl(var(--H), 0%, var(--L));
+  --darker-color: hsl(var(--H),var(--S), calc(var(--L) - var(--lighterdarker)));
+  --lighter-color: hsl(var(--H),var(--S), calc(var(--L) + var(--lighterdarker)));
+  --adj-color-1: hsl(calc(var(--H) + 120), var(--S), var(--L));
+  --adj-color-2: hsl(calc(var(--H) + 240), var(--S), var(--L));
+  --ana-color-1: hsl(calc(var(--H) - var(--degree)), var(--S), var(--L));
+  --ana-color-2: hsl(calc(var(--H) + var(--degree)), var(--S), var(--L));
+
+  --fd-font-size: 1rem;
+  --fd-font-family: sans-serif;
+  --fd-font-color: var(--base-color);
+
+  --fd-border-color: var(--base-color);
+  --fd-background: #fefefe;
+  --fd-border: 1px solid var(--fd-border-color);
+  --fd-border-radius: 5px;
+
+  --fd-padding: .2em;
+  --fd-padding-em: calc(1em + var(--fd-padding) * 2);
+
+  --hover-border: var(--fd-border);
+  --hover-background: var(--fd-background);
+  --hover-box-shadow: rgba(0, 0, 0, .5) 0px 0px 3px 1px;
+
+  --focus-border: 3px solid var(--base-color);
+  --focus-outline: 0;
+
+/* FIELDS (INPUT, TEXTAREA) + SELECT + RADIO + CHECKBOX */
+  --fields-background: var(--fd-background, #fff);
+  --fields-box-shadow: inset 0 1px 2px rgba(0,0,0,.39);
+  --fields-min-height: 20px;
+  --fields-min-width: 180px;
+
+  --fields-hover-border: inset 1px 2px 8px rgba(0, 0, 0, 0.02);
+  --fields-hover-background:;
+  --fields-hover-box-shadow-:1px 1px 2px 0 #00f;
+
+
+/* BUTTONS */
+  --buttons-background: var(--fd-background, #fff);
+  --buttons-min-height: 30px;
+  --buttons-box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+
+  /* VALID / INVALID */
+  /*--fields-valid-border-color: #0F0;
+  --fields-invalid-border-color: #F00;*/
+
+  /* DISABLED */
+  --disabled-background: #e9ecef;
+  --disabled-color: var(--desat-color);
+
+  /* SELECTION  */
+  --selection-bg-color: var(--base-color);
+  --selection-text-color: #fff;
+
+  /* PLACEHOLDER */
+  --fd-placeholder-font: italic 1em sans-serif;
+  --fd-placeholder-font-color: #999;
+
+}
+
+/**** PLACEHOLDER *************************************************************/
+::placeholder {
+  color: var(--fd-placeholder-font-color);
+  font: var(--fd-placeholder-font)
+}
+::-moz-placeholder {
+  color: var(--fd-placeholder-font-color);
+  font: var(--fd-placeholder-font)
+}
+:-ms-input-placeholder {
+  color: var(--fd-placeholder-font-color);
+  font: var(--fd-placeholder-font)
+}
+::-webkit-input-placeholder {
+  color: var(--fd-placeholder-font-color);
+  font: var(--fd-placeholder-font)
+}
+
+/**** SELECTION ***************************************************************//*ok*/
+input::selection,
+textarea::selection,
+label::selection,
+fieldset::selection,
+legend::selection {
+  color: var(--selection-text-color);
+  background-color: var(--selection-bg-color)
+}
+input::-webkit-datetime-edit-ampm-field:focus,
+input::-webkit-datetime-edit-day-field:focus,
+input::-webkit-datetime-edit-hour-field:focus,
+input::-webkit-datetime-edit-millisecond-field:focus,
+input::-webkit-datetime-edit-minute-field:focus,
+input::-webkit-datetime-edit-month-field:focus,
+input::-webkit-datetime-edit-second-field:focus,
+input::-webkit-datetime-edit-week-field:focus,
+input::-webkit-datetime-edit-year-field:focus {
+  color: var(--selection-text-color);
+  background-color: var(--selection-bg-color);
+}
+
+
+input:focus, textarea:focus, button:focus, select:focus, details.fd-select:focus {
+  outline: 3px solid hsla(var(--H),var(--S), var(--L), .5);
+}
+
+/**** FIELDSET ****************************************************************/
+fieldset {
+  border-radius: var(--fd-border-radius);
+  border: var(--fd-border);
+  padding: calc(var(--fd-padding) * 2);
+  color: var(--base-color)
+}
+legend {
+  padding: 0 var(--fd-padding);
+  color: var(--darker-color)
+}
+
+/**** LABEL *******************************************************************/
+label {
+  display: inline-block;
+  color: var(--base-color);
+  font-size: var(--fd-font-size)
+}
+
+/**** FIELDS ******************************************************************/
+select, textarea, [type=text], [type=password], [type=email], [type=search],
+[type=tel], [type=url], [type=month], [type=week], [type=number], [type=date],
+[type=time], [type=datetime-local] {
+  min-width: var(--fields-min-width);
+  color: var(--fd-font-color);
+
+}
+
+textarea, [type=text], [type=password], [type=email], [type=search],
+[type=tel], [type=url], [type=month], [type=week], [type=number], [type=date],
+[type=time], [type=datetime-local] {
+  box-shadow: var(--fields-box-shadow);
+}
+
+textarea {
+  padding: var(--fd-padding);
+}
+
+select, textarea, [type=text], [type=password], [type=email], [type=search],
+[type=tel], [type=url], [type=month], [type=week], [type=number], [type=date],
+[type=time], [type=datetime-local], [type=radio], [type=checkbox], [type=color],
+[type=submit], [type=button], [type=reset], button {
+  background: var(--fields-background);
+  border: var(--fd-border);
+  border-radius: var(--fd-border-radius);
+  font-size: var(--fd-font-size);
+  line-height: calc(var(--fd-padding)*2 + 1em);
+}
+
+[type=text], [type=password], [type=email], [type=search],
+[type=tel], [type=url], [type=month], [type=week], [type=number], [type=date],
+[type=time], [type=datetime-local] {
+  height: calc(var(--fd-padding)*2 + 1em);
+
+  padding: 0 var(--fd-padding)
+}
+/**** BUTTONS *****************************************************************/
+[type=submit], [type=button], [type=reset], button {
+  background: var(--buttons-background);
+  height: calc(1em + 2 * var(--fd-padding));
+  padding: 0 calc(var(--fd-padding) * 2.5);
+  color: var(--base-color);
+  box-shadow: var(--buttons-box-shadow);
+  box-sizing: content-box;
+}
+[type=file]{
+  font-size: var(--fd-font-size);
+  overflow: visible !important;
+  overflow-clip-box: padding-box;
+  overflow-clip-margin: 1px;
+}
+::file-selector-button {
+  color: var(--base-color);
+  border-radius: var(--fd-border-radius);
+  background-color: var(--buttons-background);
+  border: var(--fd-border);
+  box-shadow: var(--buttons-box-shadow);
+  padding: var(--fd-padding) calc(var(--fd-padding) * 2.5);
+}
+::-webkit-file-upload-button {
+  color: var(--base-color);
+  border-radius: var(--fd-border-radius);
+  background-color: var(--buttons-background);
+  border: var(--fd-border);
+  box-shadow: var(--buttons-box-shadow);
+  padding: var(--fd-padding) calc(var(--fd-padding) * 2.5);
+}
+::-ms-browse {
+  color: var(--base-color);
+  background-color: var(--buttons-bg-color);
+  border-radius: var(--fd-border-radius);
+  border: var(--fd-border);
+  box-shadow: var(--buttons-box-shadow);
+  padding: var(--fd-padding) calc(var(--fd-padding) * 2.5);
+}
+
+  /* HOVER */
+::file-selector-button:hover {
+  box-shadow: var(--hover-box-shadow);
+  border: var(--hover-border);
+  background: var(--hover-background);
+}
+[type=submit]:hover, [type=button]:hover, [type=reset]:hover, button:hover {
+  box-shadow: var(--hover-box-shadow);
+  border: var(--hover-border);
+  background: var(--hover-background);
+}
+
+
+/**** SELECT ****/
+select:not([multiple]) {
+  height: calc(1em + 2 * var(--fd-padding));
+}
+
+select[multiple] {
+  height: auto;
+}
+  select[multiple] option {
+    padding: .2em;
+    border-radius: calc(var(--fd-border-radius) - 1px);
+  }
+
+  select[multiple] option:checked {
+    background: var(--selection-bg-color) linear-gradient(var(--selection-bg-color), var(--selection-bg-color));
+    color: var(--selection-text-color)
+  }
+  select[multiple] optgroup  {
+    font-weight: 600;
+    padding: var(--fd-padding);
+    color: var(--darker-color);
+  }
+    select[multiple] optgroup option {
+      font-weight: normal;
+      color: var(--base-color)
+    }
+      select[multiple] optgroup option::before {
+        content: "";
+      }
+/**** COLOR ****/
+[type=color] {
+  width: calc((1em + var(--fd-padding) * 2) * 2.2);
+  height: calc(1em + var(--fd-padding) * 2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center
+}
+::-moz-color-swatch {
+  border-radius: calc(var(--fd-border-radius) - 1px);
+  height: calc(100% - 6px);
+  width: calc(100% - 6px);;
+}
+::-webkit-color-swatch {
+  border-radius: calc(var(--fd-border-radius) - 1px);
+  margin: 3px
+}
+
+/**** RADIO & CHECKBOX ****/
+[type=radio], [type=checkbox] {
+  position: relative;
+  width: 1em; height: 1em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--fields-background);
+  border: var(--fd-border);
+  margin-right: .3em;
+}
+[type=radio] {
+  border-radius: 50%;
+}
+[type=checkbox] {
+  border-radius: 2px;
+}
+[type=radio]::before,
+[type=checkbox]::before {
+  content: '';
+  display: block;
+}
+[type=radio]::before {
+  width: .5em;
+  height: .5em;
+  border-radius: 50%;
+  background-color: transparent;
+  transition: background-color .4s ease;
+}
+
+[type=radio]:checked::before {
+  background-color: var(--base-color);
+}
+
+[type=checkbox]::before {
+  width: 100%; height: 100%;
+  clip-path: polygon(0 0, 0 100%, 50% 100%, 100% 100%, 100% 0, 50% 0);
+  clip-path: polygon(46% 78%, 46% 78%, 46% 78%, 46% 78%, 46% 78%, 46% 78%);
+  transition: all .4s ease;
+  background-color: transparent ;
+}
+[type=checkbox]:checked::before {
+  width:.6em; height:.6em;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  background-color: var(--base-color);
+}
+
+::-ms-check {}
+
+/**** TEXTAREA ****************************************************************/
+
+::-webkit-resizer {
+
+}
+
+/**** RANGE *******************************************************************/
+
+[type=range] {
+  width: 12.5em;
+  height: 1.5em;
+  background: transparent;
+  --range-height: 5px;
+  --range-thumb-diameter: 15px;
+  --range-track-radius: 5px;
+}
+
+
+::-webkit-slider-runnable-track {
+  box-sizing: border-box;
+  border: none;
+  width: var(--fields-min-width);
+  height: var(--range-height);
+  background: var(--fd-background);
+  box-shadow: var(--fields-box-shadow), 1px 1px 2px 0px #ccc;
+  border-radius: var(--range-track-radius);
+}
+::-moz-range-track {
+  box-sizing: border-box;
+  border: none;
+  width: var(--fields-min-width);
+  height: var(--range-height);
+  background: var(--fd-background);
+  box-shadow: var(--fields-box-shadow), 1px 1px 2px 0px #ccc;
+  border-radius: var(--range-track-radius);
+}
+::-ms-track {
+  box-sizing: border-box;
+  border: none;
+  width: var(--fields-min-width);
+  height: var(--range-height);
+  background: var(--fd-background);
+  box-shadow: var(--fields-box-shadow);
+  border-radius:var(--range-track-radius);
+}
+
+::-webkit-slider-thumb {
+  box-sizing: border-box;
+  width: var(--range-thumb-diameter);
+  height: var(--range-thumb-diameter);
+  border-radius: 50%;
+  border: none;
+  background: var(--base-color) linear-gradient(to bottom right, var(--base-color), var(--lighter-color));
+  box-shadow: inset 1px 1px 2px 0 rgba(255,255,255,.7);
+}
+::-moz-range-thumb {
+  box-sizing: border-box;
+  width: var(--range-thumb-diameter);
+  height: var(--range-thumb-diameter);
+  border-radius: 50%;
+  border: none;
+  background: var(--base-color) linear-gradient(to bottom right, var(--base-color), var(--lighter-color));
+  box-shadow: inset 1px 1px 2px 0 rgba(255,255,255,.5);
+}
+::-ms-thumb {
+  margin-top: 0;
+  box-sizing: border-box;
+  border: none;
+  width: var(--range-thumb-diameter);
+  height: var(--range-thumb-diameter);
+  border-radius: 50%;
+  background: var(--base-color) linear-gradient(to bottom right, var(--base-color), var(--lighter-color));
+}
+
+/*
+::-ms-fill-lower: The track portion underneath / before the handle.
+::-ms-fill-upper: The track portion above / after the handle.
+::-ms-ticks-before: An area above / before the range track with tick marks.
+::-ms-ticks-after: An area below / after the range track with tick marks.
+::-ms-thumb: The handle.
+::-ms-track: The range track itself.
+::ms-tooltip: The tooltip that appears when the user is selecting a value with the range selector. Note that this element cannot be styled, only hidden using display: none.
+*/
+
+/* DISABLED */
+
+:disabled::file-selector-button, :disabled, :disabled *, :disabled + label {
+  cursor: not-allowed;
+  color: var(--disabled-color) !important
+}
+:disabled:not([type=range]):not([type=file]) {
+  background-color: var(--disabled-background);
+  border-color: var(--disabled-color);
+  box-shadow: none;
+}
+:disabled::file-selector-button {
+  background-color: var(--disabled-background);
+  color: var(--disabled-color);
+  border-color: var(--disabled-color);
+  box-shadow: none;
+}
+[type=checkbox]:disabled::before, [type=radio]:disabled::before {
+  background-color: var(--disabled-color) !important
+}
+
+:disabled::-webkit-slider-runnable-track {
+  background-color: var(--disabled-background);
+
+}
+:disabled::-moz-range-track {
+  background-color: var(--disabled-background);
+}
+:disabled::-ms-track {
+  background-color: var(--disabled-background);
+}
+:disabled::-webkit-slider-thumb {
+  background: var(--disabled-color)
+}
+:disabled::-moz-range-thumb {
+  background: var(--disabled-color)
+}
+:disabled::-ms-thumb {
+  background: var(--disabled-color)
+}
+[type=color]:disabled {
+  opacity: .5
+}
+
+
+
+/**** PROGRESS ****************************************************************/
+progress {
+  border: var(--fd-border);
+  background: var(--fields-background);
+  height: var(--fd-padding-em);
+  border-radius: var(--fd-border-radius);
+  width: calc(var(--fd-padding-em) * 8);
+  font-size: inherit;
+  padding: .1em
+}
+
+::-webkit-progress-bar {
+  background: var(--fields-background);
+} /* most inner element, ok for BGCOLOR */
+
+/* PROGRESS bar */
+::-ms-fill {
+  background: linear-gradient(to left, var(--lighter-color), var(--darker-color));
+  border-radius: var(--fd-border-radius);
+
+}
+::-moz-progress-bar {
+  background: linear-gradient(to left, var(--lighter-color), var(--darker-color));
+  box-sizing: padding-box;
+  border-radius: calc(var(--fd-border-radius) - 1px);
+}
+::-webkit-progress-value {
+  background: linear-gradient(to left, var(--lighter-color), var(--darker-color));
+  border-radius: calc(var(--fd-border-radius) - 1px);
+
+}
+
+
+/**** METER *******************************************************************/
+
+progress {
+  border: var(--fd-border);
+  background: var(--fields-background);
+  height: var(--fd-padding-em);
+  border-radius: var(--fd-border-radius);
+  width: calc(var(--fd-padding-em) * 8);
+  font-size: inherit;
+  padding: .1em
+}
+
+meter {
+  min-width: var(--fields-min-width); /* not working */
+  border-radius: calc(var(--fd-border-radius) - 1px);
+}
+@-moz-document url-prefix() {
+  meter {
+    border: var(--fd-border);
+    border-radius: var(--fd-border-radius);
+    padding: .12em;
+    height: 1em;
+    background: var(--fields-background);
+  }
+}
+
+::-moz-meter-bar {
+  border-radius: calc(var(--fd-border-radius) - 1px);
+}
+::-webkit-meter-bar {
+  background: var(--fields-background);
+  border-radius: var(--fd-border-radius);
+  border: var(--fd-border);
+  height: var(--fields-min-height);
+  padding: .12em;
+}
+
+::-webkit-meter-optimum-value,
+::-webkit-meter-suboptimum-value,
+::-webkit-meter-even-less-good-value {
+  border-radius: calc(var(--fd-border-radius) - 1px);
+}
+
+/* green */
+::-webkit-meter-optimum-value { background: #ABCE30}
+:-moz-meter-optimum::-moz-meter-bar {background:#ABCE30}
+/* orange */
+::-webkit-meter-suboptimum-value { background: #FD8D04 }
+:-moz-meter-sub-optimum::-moz-meter-bar {background:#FD8D04}
+/* red */
+::-webkit-meter-even-less-good-value { background: #FA1A0D }
+:-moz-meter-sub-sub-optimum::-moz-meter-bar {background: #FA1A0D}
+
+::-webkit-meter-inner-element {
+
+}
+
+/**** SCROLLBARS **************************************************************/
+textarea, select {
+  scrollbar-color: var(--base-color) transparent
+}
+textarea::-webkit-scrollbar,
+select[multiple]::-webkit-scrollbar,
+.fd-select fieldset::-webkit-scrollbar {
+   width: 12px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to right, var(--base-color), var(--lighter-color));
+  box-shadow: inset 2px 2px 4px 1px rgba(255,255,255,0.5);
+}
+select[multiple]::-webkit-scrollbar-thumb,
+.fd-select fieldset::-webkit-scrollbar-thumb,
+textarea::-webkit-scrollbar-thumb {
+  border-radius: var(--fd-border-radius)
+
+}
+textarea:disabled, select:disabled {
+  scrollbar-color: var(--disabled-color) var(--disabled-background)
+}
+:disabled::-webkit-scrollbar-thumb {
+  background: linear-gradient(to right, var(--disabled-color), var(--disabled-color));
+}

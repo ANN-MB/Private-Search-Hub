@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="fd-reset.css">
+		<link rel="stylesheet" href="formidable.css">
+		<title>Privacy Search Hub v0.1</title>
+		<style>
+			body {
+				color: 				#0D0D0D;
+				font-family: 		monospace;
+				margin: 			0;
+				padding: 			0;
+				display: 			flex;
+				justify-content:	center;
+				align-items:		center;
+				height: 			100vh;
+				background: 		url("background.png");
+			}
+			h1 {
+				margin:0
+			}
+			.search-container {
+				text-align: center;
+				padding: 10px;
+				backdrop-filter: blur(6px) saturate(104%);
+				background-color: rgba(255, 255, 255, 0.72);
+				border-radius: 12px;
+				border: 1px solid rgba(209, 213, 219, 0.3);
+				box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+				border: 1px solid rgba(255, 255, 255, 0.46);
+			}
+			input[type="search"] {
+			width: 500px;
+			text-align: left
+			}
+			#checkboxes label {
+				margin-left:.9rem;
+				cursor: pointer
+			}
+			
+			table {
+				border:1px solid #b3adad;
+				border-collapse:collapse;
+				padding:5px;
+				border-radius: 15px
+			}
+			table th {
+				border:1px solid #b3adad;
+				padding:5px;
+				background: #f0f0f0;
+				color: #313030;
+			}
+			table td {
+				border:1px solid #b3adad;
+				text-align:center;
+				padding:5px;
+				background: #ffffff;
+				color: #313030;
+			}
+			
+			@font-face {
+			  font-family: "Icons";
+			  font-style: normal;
+			  font-weight: normal;
+			  src: url('./icons.woff') format('woff');
+			}
+			.icon::before {
+			  font: normal normal normal 1em/1 "Icons";
+			  font-display: block;
+			  line-height: 1;
+			  text-rendering: auto;
+			  display: inline-block;	
+			  font-size: 2rem			  
+			}
+			.icon-windows::before		{content:"\0021"}
+			.icon-android::before		{content:"\0022"}
+			.icon-apple::before			{content:"\0023"}
+			.icon-firefox::before		{content:"\0024"}
+			.icon-edge::before			{content:"\0026"}
+			.icon-opera::before			{content:"\0028"}
+			.icon-safari::before		{content:"\0029"}
+			.icon-chrome::before		{content:"\002a"}
+			.icon-brave::before			{content:"\002b"}
+			.icon-linux::before			{content:"\00AF"}
+		</style>
+	</head>
+	<body>
+		<div class="search-container">
+			<h1>Private Search Hub</h1>
+			<p>Detected language : <span id="userlanguage"></span></p>
+			<form id="form">
+				<input type="search" id="query" placeholder="Enter your search query">
+				<input type="submit" value="Search">
+				<br><br>
+				
+				<div id="checkboxes"><!-- must be auto generated --></div>
+				
+				<br>
+				<input type="button" id="selectAll"		value="Select All">
+				<input type="button" id="deselectAll" 	value="Deselect All">
+				
+				<!--<br><br>
+				<details>
+					<summary>Plus d'options</summary>
+					<label><input type="checkbox" id="safeSearch" checked> Enable Safe Search</label>
+					<label><input type="number" id="nbResults" value="100"></label>
+					<label for="searchType">Search Type:</label>
+					<select id="searchType">
+						<option value="web">Web</option>
+						<option value="images">Images</option>
+						<option value="news">News</option>
+						<option value="videos">Videos</option>
+					</select>
+				</details>
+			</form>
+			
+			<section>
+				<table>
+					<thead>
+						<tr>
+							<th>Engine</th>
+							<th>Downloads</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>DuckDuckGo</td>
+							<td>
+								<a class="icon icon-apple"		href="https://apps.apple.com/us/app/duckduckgo-private-browser/id663592361">iOS</a>
+								<a class="icon icon-apple"		href="https://duckduckgo.com/mac">Mac</a>
+								<a class="icon icon-android"	href="https://play.google.com/store/apps/details?id=com.duckduckgo.mobile.android"></a>
+								<a class="icon icon-windows"	href="https://duckduckgo.com/windows"></a>
+								<a class="icon icon-firefox"	href="https://addons.mozilla.org/en-US/firefox/addon/duckduckgo-for-firefox/"></a>
+								<a class="icon icon-chrome"		href="https://chromewebstore.google.com/detail/duckduckgo-privacy-essent/bkdgflcldnnnapblkhphbgpggdiikppg"></a>
+								<a class="icon icon-edge"		href="https://microsoftedge.microsoft.com/addons/detail/duckduckgo-privacy-essent/caoacbimdbbljakfhgikoodekdnlcgpk"></a>
+								<a class="icon icon-opera"		href="https://addons.opera.com/en/extensions/details/duckduckgo-for-opera-2/"></a>
+							</td>
+						</tr>
+						<tr>
+							<td>Startpage</td>
+							<td>
+								<a class="icon icon-apple"		href="https://apps.apple.com/us/app/startpage-private-browser/id6478921430">iOS</a>
+								<a class="icon icon-android"	href="https://play.google.com/store/apps/details?id=com.startpage.app"></a>
+								<a class="icon icon-firefox"	href="https://addons.mozilla.org/en-US/firefox/addon/startpage-private-search/"></a>
+								<a class="icon icon-chrome"		href="https://chromewebstore.google.com/detail/startpage-%E2%80%94-private-searc/fgmjlmbojbkmdpofahffgcpkhkngfpef"></a>
+								<a class="icon icon-edge"		href="https://microsoftedge.microsoft.com/addons/detail/startpage-%E2%80%94-private-searc/jogphcaagccljpbnoddeknjjngefidmm"></a>
+							</td>
+						</tr>
+						<tr>
+							<td>Qwant</td>
+							<td>
+								<a class="icon icon-apple"		href="https://apps.apple.com/us/app/qwant-private-search/id924470452">iOS</a>
+								<a class="icon icon-android"	href="https://play.google.com/store/apps/details?id=com.qwant.liberty"></a>
+								<a class="icon icon-firefox"	href="https://addons.mozilla.org/en-US/firefox/addon/qwant-the-search-engine/"></a>
+								<a class="icon icon-chrome"		href="https://chromewebstore.google.com/detail/qwant-search-engine/kplfenefaakjhjkklghidleljeocgdap"></a>
+								<a class="icon icon-edge"		href="https://microsoftedge.microsoft.com/addons/detail/qwant-search-engine/admmanannmnegodaboehkdhangccabio"></a>
+								<a class="icon icon-opera"		href="https://www.qwant.com/browser/opera/thanks?os=windows"></a>
+								<a class="icon icon-safari"		href="https://apps.apple.com/us/app/qwant-for-safari/id1645050159"></a>
+							</td>
+						</tr>
+						<tr>
+							<td>Ecosia</td>
+							<td>
+								<a class="icon icon-apple"		href="https://apps.apple.com/fr/app/ecosia/id670881887">iOS</a>
+								<a class="icon icon-android"	href="https://play.google.com/store/apps/details?id=com.ecosia.android"></a>
+								<a class="icon icon-firefox"	href="https://addons.mozilla.org/en-US/firefox/addon/ecosia-the-green-search/"></a>
+								<a class="icon icon-chrome"		href="https://chromewebstore.google.com/detail/ecosia-the-search-engine/eedlgdlajadkbbjoobobefphmfkcchfk"></a>
+								<a class="icon icon-edge"		href="https://microsoftedge.microsoft.com/addons/detail/ecosia-the-search-engin/fhfidmlnclkepgapcephbaciajegheco"></a>
+							</td>
+						</tr>
+						<tr>
+							<td>Swisscows</td>
+							<td>
+								<a class="icon icon-apple"		href="https://apps.apple.com/fr/app/swisscows-privacy-search/id1581108092">iOS</a>
+								<a class="icon icon-android"	href="https://play.google.com/store/apps/details?id=com.swisscows.search"></a>
+								<a class="icon icon-firefox"	href="https://addons.mozilla.org/en-US/firefox/addon/swisscows-search/"></a>
+								<a class="icon icon-chrome"		href="https://chromewebstore.google.com/detail/swisscows/ibimaeimnogcdnjmmlpodbhhbejnpaij"></a>
+								<a class="icon icon-edge"		href="https://microsoftedge.microsoft.com/addons/detail/swisscows/dlclfmjmfabgglmifagcjnjcpimekdmn"></a>
+							</td>
+						</tr>
+						<tr>
+							<td>Brave</td>
+							<td>
+								<a class="icon icon-apple"		href="https://apps.apple.com/us/app/brave-browser-search-engine/id1052879175">iOS</a>
+								<a class="icon icon-apple"		href="https://laptop-updates.brave.com/latest/osx">Mac</a>
+								<a class="icon icon-android"	href="https://play.google.com/store/apps/details?id=com.brave.browser"></a>
+								<a class="icon icon-windows"	href="https://laptop-updates.brave.com/latest/winx64"></a>
+								<a class="icon icon-firefox"	href="https://addons.mozilla.org/en-US/firefox/addon/brave-search/"></a>
+								<a class="icon icon-linux"		href="https://brave.com/linux/"></a>
+							</td>
+						</tr>
+						<tr>
+							<td>searX</td>
+							<td>
+							
+							</td>
+						</tr>
+						<tr>
+							<td>mojeek</td>
+							<td>
+								<a class="icon icon-apple"		href="https://apps.apple.com/fr/app/mojeek/id1505807785">Mac</a>
+								<a class="icon icon-android"	href="https://play.google.com/store/apps/details?id=mojeek.app"></a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+		</div>
+-->
+		<script>
+			const searchEngines = [
+				{ 
+					id: 				"duckduckgo",
+					name:				"DuckDuckGo",
+					url: 				`https://duckduckgo.com/?q=%s`
+					// region: 	&kl=fr-fr
+					// safe: 	&kp=1 (on) -1 (moderate) -2 (off)
+				},
+				{ 
+					id: 				"startpage",
+					name:				"Startpage",
+					url: 				`https://www.startpage.com/sp/search?query=%s`
+				},
+				{ 
+					id: 				"qwant", 	
+					name:				"Qwant",					
+					url: 				`https://www.qwant.com/?l=fr&q=%s&t=web`
+					
+				},
+				{ 
+					id: 				"ecosia", 		
+					name:				"Ecosia",
+					url:				`https://www.ecosia.org/search?q=%s`
+				},
+				{ 
+					id: 				"swisscows",	
+					name:				"Swisscows",
+					url: 				`https://swisscows.com/fr/web?query=%s`
+					
+				},
+				{ 
+					id: 				"brave", 
+					name:				"Brave",
+					url: 				`https://search.brave.com/search?q=%s`
+				},
+				{ 
+					id: 				"searx", 
+					name:				"searX",
+					url: 				`https://searx.ox2.fr/search?q=%s`
+				},
+				{
+					id:					"mojeek", 
+					name: 				"mojeek",
+					url: 				`https://www.mojeek.com/search?q=%s`
+				}
+			];
+			function fixedEncodeURIComponent(str) {
+				return encodeURIComponent(str).replace(/[!'()*]/g, c => "%" + c.charCodeAt(0).toString(16)).replace(" ","+")
+			}
+			function getUserLanguage() {
+				return (navigator.languages !== undefined ? navigator.languages[0] : navigator.language) //.substring(0, 2);
+			}
+
+
+		document.getElementById("selectAll").addEventListener("click", function() {
+			document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.checked = true);
+		});
+		document.getElementById("deselectAll").addEventListener("click", function() {
+			document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.checked = false);
+		});
+		window.addEventListener("load", function() {
+			document.getElementById("query").focus();
+			document.getElementById("query").select();
+			document.getElementById("userlanguage").innerHTML = getUserLanguage();
+		});		
+		document.getElementById("form").addEventListener("submit", function() {
+			const query = document.getElementById("query").value;
+			if (!query) return;
+			const encodedQuery = fixedEncodeURIComponent(query);
+
+			searchEngines.forEach(engine => {
+				if (document.getElementById(engine.id).checked) {
+					window.open(engine.url.replace("%s",encodedQuery), '_blank');
+				}
+			});
+		});			
+		searchEngines.forEach(engine => {
+			document.getElementById("checkboxes").innerHTML += `<label><input type="checkbox" id="${engine.id}" checked>${engine.name}</label>`;
+		});		
+		</script>
+	</body>
+</html>
+
+
