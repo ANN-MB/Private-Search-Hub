@@ -90,17 +90,15 @@
 		<div class="search-container">
 			<h1>Private Search Hub</h1>
 			<p>Detected language : <span id="userlanguage"></span></p>
-			<form id="form">
-				<input type="search" id="query" placeholder="Enter your search query">
-				<input type="submit" value="Search">
-				<br><br>
-				
-				<div id="checkboxes"><!-- must be auto generated --></div>
-				
-				<br>
-				<input type="button" id="selectAll"		value="Select All">
-				<input type="button" id="deselectAll" 	value="Deselect All">
-				
+			<input type="search" id="query" placeholder="Enter your search query">
+			<input type="button" id="submit" value="Search">
+			<br><br>
+			
+			<div id="checkboxes"><!-- must be auto generated --></div>
+			
+			<br>
+			<input type="button" id="selectAll"		value="Select All">
+			<input type="button" id="deselectAll" 	value="Deselect All">
 				<!--<br><br>
 				<details>
 					<summary>Plus d'options</summary>
@@ -114,7 +112,7 @@
 						<option value="videos">Videos</option>
 					</select>
 				</details>
-			</form>
+			
 			
 			<section>
 				<table>
@@ -256,39 +254,38 @@
 					url: 				`https://www.mojeek.com/search?q=%s`
 				}
 			];
+		
 			function fixedEncodeURIComponent(str) {
 				return encodeURIComponent(str).replace(/[!'()*]/g, c => "%" + c.charCodeAt(0).toString(16)).replace(" ","+")
 			}
 			function getUserLanguage() {
 				return (navigator.languages !== undefined ? navigator.languages[0] : navigator.language) //.substring(0, 2);
 			}
-
-
-		document.getElementById("selectAll").addEventListener("click", function() {
-			document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.checked = true);
-		});
-		document.getElementById("deselectAll").addEventListener("click", function() {
-			document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.checked = false);
-		});
-		window.addEventListener("load", function() {
-			document.getElementById("query").focus();
-			document.getElementById("query").select();
-			document.getElementById("userlanguage").innerHTML = getUserLanguage();
-		});		
-		document.getElementById("form").addEventListener("submit", function() {
-			const query = document.getElementById("query").value;
-			if (!query) return;
-			const encodedQuery = fixedEncodeURIComponent(query);
-
-			searchEngines.forEach(engine => {
-				if (document.getElementById(engine.id).checked) {
-					window.open(engine.url.replace("%s",encodedQuery), '_blank');
-				}
+			document.getElementById("selectAll").addEventListener("click", function() {
+				document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.checked = true);
 			});
-		});			
-		searchEngines.forEach(engine => {
-			document.getElementById("checkboxes").innerHTML += `<label><input type="checkbox" id="${engine.id}" checked>${engine.name}</label>`;
-		});		
+			document.getElementById("deselectAll").addEventListener("click", function() {
+				document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.checked = false);
+			});
+			window.addEventListener("load", function() {
+				document.getElementById("query").focus();
+				document.getElementById("query").select();
+				document.getElementById("userlanguage").innerHTML = getUserLanguage();
+			});		
+			document.getElementById("submit").addEventListener("click", function() {
+				const query = document.getElementById("query").value;
+				if (!query) return;
+				const encodedQuery = fixedEncodeURIComponent(query);
+
+				searchEngines.forEach(engine => {
+					if (document.getElementById(engine.id).checked) {
+						window.open(engine.url.replace("%s",encodedQuery), '_blank');
+					}
+				});
+			});			
+			searchEngines.forEach(engine => {
+				document.getElementById("checkboxes").innerHTML += `<label><input type="checkbox" name="engine" id="${engine.id}" checked>${engine.name}</label>`;
+			});		
 		</script>
 	</body>
 </html>
