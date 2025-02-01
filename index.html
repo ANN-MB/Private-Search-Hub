@@ -22,42 +22,42 @@
 				margin:0
 			}
 			.search-container {
-				text-align: center;
-				padding: 10px;
-				backdrop-filter: blur(6px) saturate(104%);
-				background-color: rgba(255, 255, 255, 0.72);
-				border-radius: 12px;
-				border: 1px solid rgba(209, 213, 219, 0.3);
-				box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-				border: 1px solid rgba(255, 255, 255, 0.46);
+				text-align: 		center;
+				padding: 			10px;
+				backdrop-filter: 	blur(6px) saturate(104%);
+				background-color: 	rgba(255, 255, 255, 0.72);
+				border-radius:		12px;
+				border:				1px solid rgba(209, 213, 219, 0.3);
+				box-shadow: 		0 4px 30px rgba(0, 0, 0, 0.1);
+				border: 			1px solid rgba(255, 255, 255, 0.46);
 			}
 			input[type="search"] {
-			width: 500px;
-			text-align: left
+				width: 				500px;
+				text-align:			left
 			}
 			#checkboxes label {
-				margin-left:.9rem;
-				cursor: pointer
+				margin-left:		.9rem;
+				cursor:				pointer
 			}
 			
 			table {
-				border:1px solid #b3adad;
-				border-collapse:collapse;
-				padding:5px;
-				border-radius: 15px
+				border:				1px solid #b3adad;
+				border-collapse:	collapse;
+				padding:			5px;
+				border-radius:		15px
 			}
 			table th {
-				border:1px solid #b3adad;
-				padding:5px;
-				background: #f0f0f0;
-				color: #313030;
+				border:				1px solid #b3adad;
+				padding:			5px;
+				background:			#f0f0f0;
+				color:				#313030;
 			}
 			table td {
-				border:1px solid #b3adad;
-				text-align:center;
-				padding:5px;
-				background: #ffffff;
-				color: #313030;
+				border:				1px solid #b3adad;
+				text-align:			center;
+				padding:			5px;
+				background:			#ffffff;
+				color:				#313030;
 			}
 			
 			@font-face {
@@ -220,22 +220,36 @@
 					id: 				"startpage",
 					name:				"Startpage",
 					url: 				`https://www.startpage.com/sp/search?query=%s`
+					// &cat=web images video news shopping
+					// &language=english
 				},
 				{ 
 					id: 				"qwant", 	
 					name:				"Qwant",					
 					url: 				`https://www.qwant.com/?l=fr&q=%s&t=web`
+					// t=web news images videos shopping
+					// &locale=fr_FR
 					
 				},
 				{ 
 					id: 				"ecosia", 		
 					name:				"Ecosia",
 					url:				`https://www.ecosia.org/search?q=%s`
+					//https://www.ecosia.org/search?q=test
+					//https://www.ecosia.org/images?q=test
+					//https://www.ecosia.org/news?q=test
+					//https://www.ecosia.org/videos?q=test
+					//https://www.ecosia.org/shopping?q=test
 				},
 				{ 
 					id: 				"swisscows",	
 					name:				"Swisscows",
 					url: 				`https://swisscows.com/fr/web?query=%s`
+					
+					//https://swisscows.com/fr/web?query=test
+					//https://swisscows.com/fr/news?query=test
+					//https://swisscows.com/fr/images?query=test
+					//https://swisscows.com/fr/video?query=test
 					
 				},
 				{ 
@@ -263,14 +277,33 @@
 			}
 			document.getElementById("selectAll").addEventListener("click", function() {
 				document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.checked = true);
+				savePreferences()
 			});
 			document.getElementById("deselectAll").addEventListener("click", function() {
 				document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => checkbox.checked = false);
-			});
+				savePreferences()
+			});		
+			function savePreferences() {
+				let selectedEngines = [];
+				document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+					if (checkbox.checked) {
+						selectedEngines.push(checkbox.id);
+					}
+				});
+				localStorage.setItem("selectedSearchEngines", JSON.stringify(selectedEngines));
+			}
+			function loadPreferences() {
+				let savedEngines = JSON.parse(localStorage.getItem("selectedSearchEngines")) || [];
+				document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+					checkbox.checked = savedEngines.includes(checkbox.id);
+					checkbox.addEventListener("change", savePreferences);
+				});
+			}
 			window.addEventListener("load", function() {
 				document.getElementById("query").focus();
 				document.getElementById("query").select();
 				document.getElementById("userlanguage").innerHTML = getUserLanguage();
+				loadPreferences();
 			});		
 			document.getElementById("submit").addEventListener("click", function() {
 				const query = document.getElementById("query").value;
